@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".work.ui.activities.MainActivity">
+
+    <com.ute.environmentalmonitoring.work.ui.view.NoSlidingViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/colorTrans"/>
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/nv_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:itemIconTint="@drawable/bottom_color_selector"
+        app:itemTextColor="@drawable/bottom_color_selector"
+        app:menu="@menu/bottom_navigation"/>
+
+
+</LinearLayout>

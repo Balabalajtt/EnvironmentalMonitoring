@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorGreen">
+
+        <ImageView
+            android:id="@+id/im_location"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/down"
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="16dp"/>
+
+        <TextView
+            android:id="@+id/tv_location"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="国控点"
+            android:textSize="20sp"
+            android:textColor="@color/colorWhite"
+            android:gravity="center_vertical"/>
+
+    </LinearLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorGreen">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="36dp"
+                    android:background="@drawable/circle">
+
+                    <TextView
+                        android:id="@+id/tv_aqi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:text="82"
+                        android:textSize="40sp"
+                        android:layout_gravity="center"
+                        android:gravity="bottom"
+                        android:textColor="@color/colorWhite"/>
+
+                    <TextView
+                        android:id="@+id/tv_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:text="良"
+                        android:textSize="36sp"
+                        android:layout_gravity="center"
+                        android:gravity="top"
+                        android:textColor="@color/colorWhite"/>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="36dp">
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_temp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:text="21℃"
+                            android:textSize="36sp"
+                            android:textColor="@color/colorWhite"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="温度"
+                            android:layout_marginLeft="8dp"
+                            android:textSize="16sp"
+                            android:textColor="@color/colorWhite"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_hum"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:text="48%"
+                            android:textSize="36sp"
+                            android:textColor="@color/colorWhite"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="湿度"
+                            android:layout_marginLeft="8dp"
+                            android:textSize="16sp"
+                            android:textColor="@color/colorWhite"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="8dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:gravity="center"
+                            android:text="PM2.5"/>
+
+                        <TextView
+                            android:id="@+id/tv_pm25"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:textSize="12sp"
+                            android:gravity="center"
+                            android:text="82ug/m3"/>
+
+                        <View
+                            android:layout_width="88dp"
+                            android:layout_height="4dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_gravity="center_horizontal"
+                            android:background="@color/colorGreen" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="8dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:gravity="center"
+                            android:text="PM10"/>
+
+                        <TextView
+                            android:id="@+id/tv_pm10"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:textSize="12sp"
+                            android:gravity="center"
+                            android:text="82ug/m3"/>
+
+                        <View
+                            android:layout_width="88dp"
+                            android:layout_height="4dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_gravity="center_horizontal"
+                            android:background="@color/colorGreen" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="8dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:gravity="center"
+                            android:text="SO2"/>
+
+                        <TextView
+                            android:id="@+id/tv_so2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:textSize="12sp"
+                            android:gravity="center"
+                            android:text="82ug/m3"/>
+
+                        <View
+                            android:layout_width="88dp"
+                            android:layout_height="4dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_gravity="center_horizontal"
+                            android:background="@color/colorGreen" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_marginTop="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="8dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:gravity="center"
+                            android:text="O3"/>
+
+                        <TextView
+                            android:id="@+id/tv_o3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:textSize="12sp"
+                            android:gravity="center"
+                            android:text="82ug/m3"/>
+
+                        <View
+                            android:layout_width="88dp"
+                            android:layout_height="4dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_gravity="center_horizontal"
+                            android:background="@color/colorGreen" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="8dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:gravity="center"
+                            android:text="NO2"/>
+
+                        <TextView
+                            android:id="@+id/tv_no2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:textSize="12sp"
+                            android:gravity="center"
+                            android:text="82ug/m3"/>
+
+                        <View
+                            android:layout_width="88dp"
+                            android:layout_height="4dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_gravity="center_horizontal"
+                            android:background="@color/colorGreen" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="8dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:gravity="center"
+                            android:text="CO"/>
+
+                        <TextView
+                            android:id="@+id/tv_co"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:textSize="12sp"
+                            android:gravity="center"
+                            android:text="82ug/m3"/>
+
+                        <View
+                            android:layout_width="88dp"
+                            android:layout_height="4dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_gravity="center_horizontal"
+                            android:background="@color/colorGreen" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <include layout="@layout/day_weather_layout"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"/>
+
+            <include layout="@layout/day_weather_layout"
+                android:layout_marginTop="1px"
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+</LinearLayout>
