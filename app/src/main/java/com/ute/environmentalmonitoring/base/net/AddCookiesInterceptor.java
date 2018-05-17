@@ -7,6 +7,7 @@ import android.util.Log;
 import com.ute.environmentalmonitoring.base.common.Constant;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import okhttp3.Interceptor;
 import okhttp3.Request;
@@ -30,14 +31,15 @@ public class AddCookiesInterceptor implements Interceptor {
     public Response intercept(Chain chain) throws IOException {
         final Request.Builder builder = chain.request().newBuilder();
         SharedPreferences sharedPreferences = Constant.context.getSharedPreferences("cookie", Context.MODE_PRIVATE);
-        //最近在学习RxJava,这里用了RxJava的相关API大家可以忽略,用自己逻辑实现即可
         Observable.just(sharedPreferences.getString("cookie", ""))
                 .subscribe(new Action1<String>() {
                     @Override
                     public void call(String cookie) {
                         //添加cookie
-                        Log.d(TAG, "call: " + cookie);
-                        builder.addHeader("Cookie", cookie);
+                        if (!Objects.equals(cookie, "")) {
+                            Log.d(TAG, "call: " + cookie);
+                            builder.addHeader("Cookie", cookie);
+                        }
                     }
                 });
         return chain.proceed(builder.build());

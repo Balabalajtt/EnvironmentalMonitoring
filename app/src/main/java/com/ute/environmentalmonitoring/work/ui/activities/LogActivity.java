@@ -30,7 +30,7 @@ public class LogActivity extends BaseMvpActivity<LoginPresenter> implements Logi
     private Button mBtLogin;
 
     private RadioGroup mRadioGroup;
-    private String mUserType;
+    private int mUserType;
     private EditText mEtCodeRegister;
     private EditText mEditNameRegister;
     private EditText mEtPhoneRegister;
@@ -78,10 +78,10 @@ public class LogActivity extends BaseMvpActivity<LoginPresenter> implements Logi
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (group.getCheckedRadioButtonId()) {
                     case R.id.rb_zhengfu:
-                        mUserType = "政府用户";
+                        mUserType = 0;
                         break;
                     case R.id.rb_qiye:
-                        mUserType = "企业用户";
+                        mUserType = 1;
                         break;
                 }
             }
@@ -108,6 +108,7 @@ public class LogActivity extends BaseMvpActivity<LoginPresenter> implements Logi
                 mPresenter.login(mEtPhoneLogin.getText().toString(), mEditPwdLogin.getText().toString());
                 break;
             case R.id.bt_register:
+                mPresenter.register(mUserType, mEtCodeRegister.getText().toString(), mEditNameRegister.getText().toString(), mEtPhoneRegister.getText().toString(), mEditPwdRegister.getText().toString());
                 break;
         }
     }

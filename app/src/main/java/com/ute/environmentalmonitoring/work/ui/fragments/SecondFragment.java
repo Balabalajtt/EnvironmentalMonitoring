@@ -21,13 +21,13 @@ import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
 import com.ute.environmentalmonitoring.R;
 import com.ute.environmentalmonitoring.base.common.ChartUtil;
+import com.ute.environmentalmonitoring.base.common.Constant;
 import com.ute.environmentalmonitoring.base.ui.fragment.BaseMvpFragment;
 import com.ute.environmentalmonitoring.work.data.gson.SecondData;
 import com.ute.environmentalmonitoring.work.presenter.SecondPresenter;
 import com.ute.environmentalmonitoring.work.presenter.view.SecondView;
 import com.ute.environmentalmonitoring.work.ui.adapter.CompareDataAdapter;
 import com.ute.environmentalmonitoring.work.ui.adapter.PopAdapter;
-import com.ute.environmentalmonitoring.work.data.CompareData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,10 +66,12 @@ public class SecondFragment extends BaseMvpFragment<SecondPresenter> implements 
 
     private LineChart mChart;
 
-    private String[] locationArray = {"blueaqi", "aroundaqi"};
-    private String position = "blueaqi";
+    private String position = "蓝居";
     private String target = "aqi";
     private int type = 0;
+
+    private String[] mXUnit = new String[21];
+
 
     @Nullable
     @Override
@@ -86,9 +88,9 @@ public class SecondFragment extends BaseMvpFragment<SecondPresenter> implements 
         mImLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mPopupWindow.isShowing()){
+                if (mPopupWindow.isShowing()) {
                     mPopupWindow.dismiss();
-                }else{
+                } else {
                     mPopupWindow.showAsDropDown(mImLocation);
                 }
             }
@@ -97,9 +99,9 @@ public class SecondFragment extends BaseMvpFragment<SecondPresenter> implements 
         mTvLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mPopupWindow.isShowing()){
+                if (mPopupWindow.isShowing()) {
                     mPopupWindow.dismiss();
-                }else{
+                } else {
                     mPopupWindow.showAsDropDown(mImLocation);
                 }
             }
@@ -109,7 +111,7 @@ public class SecondFragment extends BaseMvpFragment<SecondPresenter> implements 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 mTvLocation.setText(locations.get(i) + "");
-                position = locationArray[i];
+                position = locations.get(i);
                 mPopupWindow.dismiss();
                 mPresenter.getSecondData(position, type, target);
             }
@@ -148,37 +150,20 @@ public class SecondFragment extends BaseMvpFragment<SecondPresenter> implements 
         mChart = view.findViewById(R.id.chart);
         Log.d(TAG, "onCreateView: " + mChart);
         ChartUtil.initChart(mChart);
-        ChartUtil.notifyDataSetChanged(mChart, getChartData(), ChartUtil.dayValue);
+
 
         mPresenter.getSecondData(position, 0, target);
 
         return view;
     }
 
-    private List<Entry> getChartData() {
-        List<Entry> values = new ArrayList<>();
-        values.add(new Entry(0, 15));
-        values.add(new Entry(1, 15));
-        values.add(new Entry(2, 15));
-        values.add(new Entry(3, 20));
-        values.add(new Entry(4, 25));
-        values.add(new Entry(5, 20));
-        values.add(new Entry(6, 20));
-        return values;
-    }
 
     private void initData() {
-
         locations = new ArrayList<>();
-        locations.add("蓝居");
-        locations.add("环科院");
+        locations.addAll(Constant.locations);
+        locations.remove(0);
 
         mSecondDatas = new ArrayList<>();
-//        int count = 10;
-//        while(count > 0) {
-//            mCompareData.add(new CompareData("05-01 11:00", 77, 75));
-//            count--;
-//        }
     }
 
     @Override
@@ -269,6 +254,7 @@ public class SecondFragment extends BaseMvpFragment<SecondPresenter> implements 
         mBtMonth.setBackgroundColor(getResources().getColor(R.color.colorWhite));
         mBtMonth.setTextColor(getResources().getColor(R.color.colorGreen));
     }
+
     private void setBtSelect(Button button) {
         button.setBackgroundColor(getResources().getColor(R.color.colorGreen));
         button.setTextColor(getResources().getColor(R.color.colorWhite));
@@ -303,6 +289,25 @@ public class SecondFragment extends BaseMvpFragment<SecondPresenter> implements 
         mSecondDatas.clear();
         mSecondDatas.addAll(datas);
         mAdapter.notifyDataSetChanged();
-        ChartUtil.notifyDataSetChanged(mChart, getChartData(), ChartUtil.dayValue);
+
+        for (int i = 0; i < 21; i++) {
+            if (type == 0) {
+                mXUnit[i] = mSecondDatas.get(i).getTimestamp().substring(11, 16);
+            } else if (type == 1) {
+                mXUnit[i] = mSecondDatas.get(i).getTimestamp().substring(8, 10) + "日"/* + mSecondDatas.get(i).getTimestamp().substring(10, 13) + "时"*/;
+            } else {
+                mXUnit[i] = mSecondDatas.get(i).getTimestamp().substring(5, 11);
+            }
+        }
+
+        List<Entry> values1 = new ArrayList<>();
+        List<Entry> values2 = new ArrayList<>();
+        for (int i = 0; i <= 20; i += 5) {
+            values1.add(new Entry(i, (float) mSecondDatas.get(i).getPositionTarget()));
+            values2.add(new Entry(i, (float) mSecondDatas.get(i).getNationalTarget()));
+        }
+
+        ChartUtil.notifyDataSetChanged(mChart, values1, values2, mXUnit);
+
     }
 }

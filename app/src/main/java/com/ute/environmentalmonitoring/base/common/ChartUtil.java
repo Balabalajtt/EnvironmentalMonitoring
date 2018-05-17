@@ -1,6 +1,7 @@
 package com.ute.environmentalmonitoring.base.common;
 
 import android.graphics.Color;
+import android.util.Log;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -11,7 +12,9 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -24,6 +27,8 @@ public class ChartUtil {
     public static int dayValue = 0;
     public static int weekValue = 1;
     public static int monthValue = 2;
+
+    private static final String TAG = "ChartUtil";
 
     /**
      * 初始化图表
@@ -44,7 +49,7 @@ public class ChartUtil {
         chart.getAxisRight().setEnabled(false);
         // 不显示图例
         Legend legend = chart.getLegend();
-        legend.setEnabled(false);
+        legend.setEnabled(true);
         // 向左偏移15dp，抵消y轴向右偏移的30dp
         chart.setExtraLeftOffset(-15);
 
@@ -87,98 +92,56 @@ public class ChartUtil {
     /**
      * 设置图表数据
      *
-     * @param chart  图表
-     * @param values 数据
      */
-    public static void setChartData(LineChart chart, List<Entry> values) {
-        LineDataSet lineDataSet;
+    public static void setChartData(LineChart chart, List<Entry> values1, List<Entry> values2) {
+        LineDataSet lineDataSet1;
+        LineDataSet lineDataSet2;
 
-        if (chart.getData() != null && chart.getData().getDataSetCount() > 0) {
-            lineDataSet = (LineDataSet) chart.getData().getDataSetByIndex(0);
-            lineDataSet.setValues(values);
-            chart.getData().notifyDataChanged();
-            chart.notifyDataSetChanged();
-        } else {
-            lineDataSet = new LineDataSet(values, "");
+        List<ILineDataSet> sets = new ArrayList<>();
+
+            lineDataSet1 = new LineDataSet(values1, "监测点");
             // 设置曲线颜色
-            lineDataSet.setColor(Color.parseColor("#FFFFFF"));
+            lineDataSet1.setColor(Color.parseColor("#fff701"));
             // 设置平滑曲线
-            lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+            lineDataSet1.setMode(LineDataSet.Mode.CUBIC_BEZIER);
             // 不显示坐标点的小圆点
-            lineDataSet.setDrawCircles(false);
+            lineDataSet1.setDrawCircles(false);
             // 不显示坐标点的数据
-            lineDataSet.setDrawValues(false);
+            lineDataSet1.setDrawValues(false);
             // 不显示定位线
-            lineDataSet.setHighlightEnabled(false);
+            lineDataSet1.setHighlightEnabled(false);
 
-            LineData data = new LineData(lineDataSet);
+            lineDataSet2 = new LineDataSet(values2, "国控");
+            // 设置曲线颜色
+            lineDataSet2.setColor(Color.parseColor("#ffffff"));
+            // 设置平滑曲线
+            lineDataSet2.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+            // 不显示坐标点的小圆点
+            lineDataSet2.setDrawCircles(false);
+            // 不显示坐标点的数据
+            lineDataSet2.setDrawValues(false);
+            // 不显示定位线
+            lineDataSet2.setHighlightEnabled(false);
+
+            sets.add(lineDataSet1);
+            sets.add(lineDataSet2);
+            LineData data = new LineData(sets);
             chart.setData(data);
             chart.invalidate();
-        }
     }
 
-    /**
-     * 更新图表
-     *
-     * @param chart     图表
-     * @param values    数据
-     * @param valueType 数据类型
-     */
-    public static void notifyDataSetChanged(LineChart chart, List<Entry> values,
-                                            final int valueType) {
+
+    public static void notifyDataSetChanged(LineChart chart, List<Entry> values1, List<Entry> values2, final String[] xUnit) {
         chart.getXAxis().setValueFormatter(new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
-                return xValuesProcess(valueType)[(int) value];
+                Log.d(TAG, "getFormattedValue: " + value);
+                return xUnit[(int) value];
             }
         });
 
         chart.invalidate();
-        setChartData(chart, values);
+        setChartData(chart, values1, values2);
     }
 
-    /**
-     * x轴数据处理
-     *
-     * @param valueType 数据类型
-     * @return x轴数据
-     */
-    private static String[] xValuesProcess(int valueType) {
-        String[] week = {"周日", "周一", "周二", "周三", "周四", "周五", "周六"};
-
-        if (valueType == dayValue) { // 今日
-            String[] dayValues = new String[7];
-            long currentTime = System.currentTimeMillis();
-            for (int i = 6; i >= 0; i--) {
-                dayValues[i] = TimeUtil.dateToString(currentTime, TimeUtil.dateFormat_day);
-                currentTime -= (3 * 60 * 60 * 1000);
-            }
-            return dayValues;
-
-        } else if (valueType == weekValue) { // 本周
-            String[] weekValues = new String[7];
-            Calendar calendar = Calendar.getInstance();
-            int currentWeek = calendar.get(Calendar.DAY_OF_WEEK);
-
-            for (int i = 6; i >= 0; i--) {
-                weekValues[i] = week[currentWeek - 1];
-                if (currentWeek == 1) {
-                    currentWeek = 7;
-                } else {
-                    currentWeek -= 1;
-                }
-            }
-            return weekValues;
-
-        } else if (valueType == monthValue) { // 本月
-            String[] monthValues = new String[7];
-            long currentTime = System.currentTimeMillis();
-            for (int i = 6; i >= 0; i--) {
-                monthValues[i] = TimeUtil.dateToString(currentTime, TimeUtil.dateFormat_month);
-                currentTime -= (4 * 24 * 60 * 60 * 1000);
-            }
-            return monthValues;
-        }
-        return new String[]{};
-    }
 }

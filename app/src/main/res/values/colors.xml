@@ -13,4 +13,7 @@
 
     <color name="colorTrans">#3c000000</color>
 
+    <color name="colorLocalLine">#fff701</color>
+    <color name="colorNationLine">#ffffff</color>
+
 </resources>

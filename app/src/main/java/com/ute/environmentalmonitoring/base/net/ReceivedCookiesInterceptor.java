@@ -30,7 +30,6 @@ public class ReceivedCookiesInterceptor implements Interceptor {
         //这里获取请求返回的cookie
         if (!originalResponse.headers("Set-Cookie").isEmpty()) {
             final StringBuffer cookieBuffer = new StringBuffer();
-            //最近在学习RxJava,这里用了RxJava的相关API大家可以忽略,用自己逻辑实现即可.大家可以用别的方法保存cookie数据
             Observable.from(originalResponse.headers("Set-Cookie")).map(new Func1<String, String>() {
                 @Override
                 public String call(String s) {

@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ute.environmentalmonitoring.R;
+import com.ute.environmentalmonitoring.base.common.Constant;
 import com.ute.environmentalmonitoring.base.ui.fragment.BaseMvpFragment;
 import com.ute.environmentalmonitoring.work.data.gson.FirstData;
 import com.ute.environmentalmonitoring.work.presenter.FirstPresenter;
@@ -36,7 +36,6 @@ public class FirstFragment extends BaseMvpFragment<FirstPresenter> implements Fi
     private ArrayList<String> locations;
 
     private String nowLocation = "";
-    private String[] locationArray = {"nationalaqi", "blueaqi", "aroundaqi"};
 
     private PopAdapter adapter;
 
@@ -70,7 +69,7 @@ public class FirstFragment extends BaseMvpFragment<FirstPresenter> implements Fi
         initPop();
         initView();
 
-        nowLocation = "nationalaqi";
+        nowLocation = locations.get(0);
         mPresenter.getFirstData(nowLocation);
 
         return view;
@@ -123,7 +122,7 @@ public class FirstFragment extends BaseMvpFragment<FirstPresenter> implements Fi
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 mTvLocation.setText(locations.get(i) + "");
-                nowLocation = locationArray[i];
+                nowLocation = locations.get(i);
                 mPopupWindow.dismiss();
                 mPresenter.getFirstData(nowLocation);
             }
@@ -134,9 +133,8 @@ public class FirstFragment extends BaseMvpFragment<FirstPresenter> implements Fi
 
     private void initData() {
         locations = new ArrayList<>();
-        locations.add("国控点");
-        locations.add("蓝居");
-        locations.add("环科院");
+        locations.addAll(Constant.locations);
+
 
     }
 

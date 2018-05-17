@@ -38,10 +38,10 @@
 
     <ImageView
         android:id="@+id/im_head"
-        android:layout_width="88dp"
-        android:layout_height="88dp"
+        android:layout_width="92dp"
+        android:layout_height="92dp"
         android:scaleType="fitCenter"
-        android:background="@color/colorGrey"
+        android:src="@drawable/logo"
         android:padding="1px"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="56dp"/>
@@ -65,7 +65,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:hint="请输入密码"/>
+            android:hint="请输入密码"
+            android:inputType="textPassword"/>
 
         <Button
             android:id="@+id/bt_login"
@@ -146,6 +147,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:inputType="textPassword"
             android:hint="请输入密码"/>
 
         <Button
